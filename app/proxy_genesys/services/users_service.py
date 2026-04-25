@@ -8,14 +8,14 @@ from app.proxy_genesys.core.status_config import STATUS_CONFIG
 from datetime import datetime, timezone
 
 
-def get_elapsed_minutes(date_str):
+def get_elapsed_seconds(date_str):
     if not date_str:
         return 0
 
     dt = datetime.fromisoformat(date_str.replace("Z", "+00:00"))
     now = datetime.now(timezone.utc)
 
-    return int((now - dt).total_seconds() / 60)
+    return int((now - dt).total_seconds())
 
 
 def normalize_user(entity):
@@ -52,7 +52,7 @@ def evaluate_alerts(user):
         if status != config["status"]:
             continue
 
-        elapsed = get_elapsed_minutes(time)
+        elapsed = get_elapsed_seconds(time)
 
         min_t = config.get("min_threshold", 0)
         max_t = config.get("max_threshold")
@@ -65,6 +65,7 @@ def evaluate_alerts(user):
                 alerts.append({
                     "name": user["name"],
                     "status": status,
+                    "status_name": config["status_name"],
                     "source": config["source"],
                     "elapsed": elapsed,
                     "level": "info"  # o lo que quieras
@@ -92,6 +93,7 @@ def evaluate_alerts(user):
         alerts.append({
             "name": user["name"],
             "status": status,
+            "status_name": config["status_name"],
             "source": config["source"],
             "elapsed": elapsed,
             "threshold": min_t,
