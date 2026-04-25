@@ -13,8 +13,9 @@ class Settings:
 
     GENESYS_TOKEN = os.getenv("GENESYS_TOKEN")
 
-    CACHE_TTL_METRICS = int(os.getenv("CACHE_TTL_METRICS", 30))
-    CACHE_TTL_USERS = int(os.getenv("CACHE_TTL_USERS", 60))
+    CACHE_TTL_METRICS = int(os.getenv("CACHE_TTL_METRICS", 5))
+    CACHE_TTL_USERS = int(os.getenv("CACHE_TTL_USERS", 5))
+    CACHE_TTL_ALERTS = int(os.getenv("CACHE_TTL_USERS", 5))
 
     HTTP_TIMEOUT = int(os.getenv("HTTP_TIMEOUT", 10))
 
